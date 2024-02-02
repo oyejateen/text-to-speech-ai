@@ -44,7 +44,7 @@ app.post('/tts', async (req, res) => {
     const audioDetails = await axios.request(options);
 
     const filename = `${uuidv4()}.mp3`;
-    const directoryPath = './audio';
+    const directoryPath = '/tmp/audio';
 
     // Create the "audio" directory if it doesn't already exist
     if (!fs.existsSync(directoryPath)) {
@@ -55,7 +55,7 @@ app.post('/tts', async (req, res) => {
     fs.writeFileSync(filePath, audioDetails.data);
 
     // Send the audio file URL to the client or do further processing here
-    const fileUrl = `${process.env.url}/audio/${filename}`;
+    const fileUrl = `${process.env.url}/tmp/audio/${filename}`;
     console.log(fileUrl);
     res.json({ audioFile: fileUrl });
 
@@ -70,5 +70,5 @@ app.post('/tts', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
